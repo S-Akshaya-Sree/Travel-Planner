@@ -1,56 +1,40 @@
-import mysql.connector as sql  
-con = sql.connect(host='localhost', user='root', passwd='akshaya', database='T')  
-cur = con.cursor() 
-def show_place(place):
+import mysql.connector as sql
+import tkinter as tk
+from tkinter import ttk
+
+con = sql.connect(host='localhost', user='root', passwd='password', database='T')
+cur = con.cursor()
+
+def show_place():
+    place = combo.get()
     cur.execute("SELECT * FROM TN WHERE PLACE=%s", (place,))
-    d = cur.fetchall()
+    data = cur.fetchall()
+    text.delete("1.0", tk.END)
+    text.insert(tk.END, "PLACE\t\tHOTELS\t\tSIGHTSEEING\n\n")
+    for row in data:
+        text.insert(tk.END, f"{row[0]}\t\t{row[1]}\t\t{row[2]}\n")
 
-    print("PLACE \t\t\t HOTELS \t\t\t SIGHTSEEING")
-    for i in d:
-        print(i[0], i[1], i[2], sep='\t\t')
+root = tk.Tk()
+root.title("Tamil Nadu Tourism App")
+root.geometry("600x400")
+places = [
+    "ARIYALUR", "CHENGALPATTU", "CHENNAI", "COIMBATORE",
+    "CUDDALORE", "DHARMAPURI", "DINDIGUL", "ERODE",
+    "KALLAKURICHI", "KANCHIPURAM", "KANYAKUMARI", "KARUR",
+    "KRISHNAGIRI", "MADURAI", "MAYILADUTHURAI", "NAGAPATTINAM",
+    "NAMAKKAL", "NILGIRIS", "PERAMBALUR", "PUDUKKOTTAI",
+    "RAMANATHAPURAM", "RANIPET", "SALEM", "SIVAGANGAI",
+    "TENKASI", "THANJAVUR", "THENI", "THOOTHUKUDI",
+    "TRICHY", "TIRUNELVELI", "TIRUPATHUR", "TIRUPPUR",
+    "TIRUVALLUR", "TIRUVANNAMALAI", "TIRUVARUR", "VELLORE",
+    "VILUPPURAM", "VIRUDHUNAGAR"
+]
 
-places = {
-    1: "ARIYALUR", 2: "CHENGALPATTU", 3: "CHENNAI",
-    4: "COIMBATORE", 5: "CUDDALORE", 6: "DHARMAPURI",
-    7: "DINDIGUL", 8: "ERODE", 9: "KALLAKURICHI",
-    10: "KANCHIPURAM", 11: "KANYAKUMARI", 12: "KARUR",
-    13: "KRISHNAGIRI", 14: "MADURAI", 15: "MAYILADUTHURAI",
-    16: "NAGAPATTINAM", 17: "NAMAKKAL", 18: "NILGIRIS",
-    19: "PERAMBALUR", 20: "PUDUKKOTTAI", 21: "RAMANATHAPURAM",
-    22: "RANIPET", 23: "SALEM", 24: "SIVAGANGAI",
-    25: "TENKASI", 26: "THANJAVUR", 27: "THENI",
-    28: "THOOTHUKUDI", 29: "TRICHY", 30: "TIRUNELVELI",
-    31: "TIRUPATHUR", 32: "TIRUPPUR", 33: "TIRUVALLUR",
-    34: "TIRUVANNAMALAI", 35: "TIRUVARUR", 36: "VELLORE",
-    37: "VILUPPURAM", 38: "VIRUDHUNAGAR"
-}
-
-while True:
-    print('''MENU 
-
-1.ARIYALUR          2.CHENGALPATTU  3.CHENNAI 
-4.COIMBATORE        5.CUDDALORE     6.DHARMAPURI 
-7.DINDIGUL          8.ERODE         9.KALLAKURICHI 
-10.KANCHIPURAM     11.KANYAKUMARI  12.KARUR 
-13.KRISHNAGIRI     14.MADURAI      15.MAYILADUTHURAI 
-16.NAGAPATTINAM    17.NAMAKKAL     18.NILGIRIS 
-19.PERAMBALUR      20.PUDUKKOTTAI  21.RAMANATHAPURAM 
-22.RANIPET         23.SALEM        24.SIVAGANGAI 
-25.TENKASI         26.THANJAVUR    27.THENI 
-28.THOOTHUKUDI     29.TRICHY       30.TIRUNELVELI 
-31.TIRUPATHUR      32.TIRUPPUR     33.TIRUVALLUR 
-34.TIRUVANNAMALAI  35.TIRUVARUR    36.VELLORE 
-37.VILUPPURAM      38.VIRUDHUNAGAR 
-39.EXIT\n''')
-    
-    try:
-        ch = int(input('ENTER YOUR CHOICE: '))
-        if ch == 39:
-            break
-        elif ch in places:
-            show_place(places[ch])
-        else:
-            print("INVALID INPUT")
-
-    except ValueError:
-        print("Please enter a number!")
+combo = ttk.Combobox(root, values=places, width=30)
+combo.set("Select a place")
+combo.pack(pady=10)
+btn = tk.Button(root, text="Show Details", command=show_place)
+btn.pack(pady=5)
+text = tk.Text(root, width=70, height=15)
+text.pack(pady=10)
+root.mainloop()
