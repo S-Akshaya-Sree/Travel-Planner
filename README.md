@@ -1,4 +1,3 @@
-PROJECT INTRODUCTIONS
 Tamil Nadu Travel Planner 
 * This project is designed to simplify and enhance your travel planning experience within the districts of Tamilnadu. It is a **desktop-based tourism application** that allows users to explore hotel options across different districts of Tamil Nadu. It provides a simple and interactive interface to view curated hotel data for each district.
 * The application is built using **Python (Tkinter)** for the user interface and **MySQL** for data storage.
