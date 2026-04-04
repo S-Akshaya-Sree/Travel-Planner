@@ -73,3 +73,7 @@ Data was preprocessed to handle:
 * Database-driven application development
 * GUI design using Python
 * Data cleaning and preprocessing techniques
+
+
+PREVIEW
+<img width="643" height="583" alt="image" src="https://github.com/user-attachments/assets/6095976b-a178-4ce6-b732-71000480080a" />
